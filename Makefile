@@ -3,6 +3,8 @@ start:
 
 setup:
 	composer install
+	cp -n .env.example .env
+    php artisan key:gen --ansi
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 routes
