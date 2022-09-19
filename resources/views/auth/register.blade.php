@@ -6,13 +6,14 @@
 {{--            </a>--}}
         </x-slot>
 
+        <h1 class="text-center"><a href="/">Менеджер задач</a></h1>
+
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <h1 class="text-center"><a href="/">Менеджер задач</a></h1>
             <!-- Name -->
             <div>
                 <x-input-label for="name" :value="__('Имя')" />

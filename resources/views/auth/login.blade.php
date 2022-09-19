@@ -9,13 +9,14 @@
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
+        <h1 class="text-center"><a href="/">Менеджер задач</a></h1>
+
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <h1 class="text-center"><a href="/">Менеджер задач</a></h1>
             <!-- Email Address -->
             <div>
                 <x-input-label for="email" :value="__('Email')" />
