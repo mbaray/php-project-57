@@ -9,7 +9,7 @@ setup:
 	php artisan migrate
 	php artisan db:seed
 	npm install
-	npm run vite
+	npm run build
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 routes
