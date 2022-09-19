@@ -8,8 +8,8 @@ setup:
 	touch database/database.sqlite
 	php artisan migrate
 	php artisan db:seed
-	npm run build
 	npm install
+	npm run vite
 
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 routes
