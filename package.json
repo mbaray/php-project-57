@@ -1,7 +1,6 @@
 {
     "private": true,
     "scripts": {
-        "vite": "vite",
         "build": "vite build",
         "dev": "npm run development",
         "development": "mix",
