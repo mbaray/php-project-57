@@ -31,7 +31,7 @@ return [
         'string' => 'The :attribute must be between :min and :max characters.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => ':attribute и подтверждение не совпадают.',
+    'confirmed' => ':Attribute и подтверждение не совпадают.',
     'current_password' => 'The password is incorrect.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
@@ -97,7 +97,7 @@ return [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'numeric' => 'The :attribute must be at least :min.',
-        'string' => ':attribute должен иметь длину не менее :min символов.',
+        'string' => ':Attribute должен иметь длину не менее :min символов.',
     ],
     'min_digits' => 'The :attribute must have at least :min digits.',
     'multiple_of' => 'The :attribute must be a multiple of :value.',
@@ -169,7 +169,7 @@ return [
     */
 
     'attributes' => [
-        'password' => 'Пароль',
+        'password' => 'пароль',
     ],
 
 ];
