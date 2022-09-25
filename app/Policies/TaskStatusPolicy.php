@@ -10,16 +10,6 @@ class TaskStatusPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(User $user): bool
-    {
-        return true;
-    }
-
-    public function view(User $user, TaskStatus $taskStatus): bool
-    {
-        return true;
-    }
-
     public function create(User $user): bool
     {
         return true;
@@ -33,15 +23,5 @@ class TaskStatusPolicy
     public function delete(User $user, TaskStatus $taskStatus): bool
     {
         return true;
-    }
-
-    public function restore(User $user, TaskStatus $taskStatus): bool
-    {
-        return false;
-    }
-
-    public function forceDelete(User $user, TaskStatus $taskStatus): bool
-    {
-        return false;
     }
 }
