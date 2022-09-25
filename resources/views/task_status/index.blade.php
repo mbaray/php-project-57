@@ -6,7 +6,7 @@
 
 {{--        @can('create', App\Models\TaskStatus::class)--}}
         @if (Auth::check())
-            <a href="{{ route('task_statuses.create')}}"> Создать статус </a>
+            <a href='{{ route('task_statuses.create')}}'> Создать статус </a>
         @endif
 
 

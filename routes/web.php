@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskStatusController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,6 @@ use App\Http\Controllers\TaskStatusController;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 Route::get('/', function () {
     return view('welcome');
 })->name('dashboard');
@@ -27,5 +24,7 @@ Route::resource('task_statuses', TaskStatusController::class);
 //->except([
 //    'create', 'edit', 'update', 'destroy'
 //]);
+
+Route::resource('tasks', TaskController::class);
 
 require __DIR__ . '/auth.php';
