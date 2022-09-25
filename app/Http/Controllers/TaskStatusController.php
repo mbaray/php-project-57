@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class TaskStatusController extends Controller
 {
+//    public function __construct()
+//    {
+//        $this->authorizeResource(TaskStatus::class, 'task_status');
+//    }
+
     public function index()
     {
         $taskStatuses = DB::table('task_statuses')->paginate(10);
@@ -40,16 +45,17 @@ class TaskStatusController extends Controller
         //
     }
 
-    public function edit(int $id)
+    public function edit(TaskStatus $taskStatus)
     {
-        $taskStatus = TaskStatus::findOrFail($id);
+//        $taskStatus = TaskStatus::findOrFail($id);
 
         return view('task_status.edit', compact('taskStatus'));
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, TaskStatus $taskStatus)
     {
-        $taskStatus = TaskStatus::findOrFail($id);
+        $this->authorize('update', $taskStatus);
+//        $taskStatus = TaskStatus::findOrFail($id);
         $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
@@ -60,9 +66,9 @@ class TaskStatusController extends Controller
         return redirect()->route('task_statuses.index');
     }
 
-    public function destroy(int $id)
+    public function destroy(TaskStatus $taskStatus)
     {
-        $taskStatus = TaskStatus::find($id);
+//        $taskStatus = TaskStatus::find($id);
         if ($taskStatus) {
             $taskStatus->delete();
         }

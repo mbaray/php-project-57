@@ -20,7 +20,8 @@ use App\Http\Controllers\TaskStatusController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth'])->name('dashboard');
+})->name('dashboard');
+//})->middleware(['auth'])->name('dashboard');
 
 Route::resource('task_statuses', TaskStatusController::class);
 //->except([

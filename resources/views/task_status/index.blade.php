@@ -3,7 +3,12 @@
 @section('content')
     <div class="container-lg">
         <h1 class="mt-5 mb-3">Статусы</h1>
-        <a href="{{ route('task_statuses.create')}}"> Создать статус </a>
+
+{{--        @can('create', App\Models\TaskStatus::class)--}}
+        @if (Auth::check())
+            <a href="{{ route('task_statuses.create')}}"> Создать статус </a>
+        @endif
+
 
         <div class="table-responsive mb-5">
             <table class="table table-bordered table-hover text-nowrap">
@@ -12,7 +17,9 @@
                     <th>ID</th>
                     <th>Имя</th>
                     <th>Дата создания</th>
-                    <th>Действия</th>
+                    @if (Auth::check())
+                        <th>Действия</th>
+                    @endif
                 </tr>
 
                 @foreach ($taskStatuses as $taskStatus)
@@ -20,16 +27,15 @@
                         <td>{{ $taskStatus->id }}</td>
                         <td>{{ $taskStatus->name }}</td>
                         <td>{{ $taskStatus->created_at }}</td>
+
+{{--                        @canany(['update', 'view', 'delete'], $taskStatus)--}}
+                        @if (Auth::check())
                         <td>
-
                             <a href='{{ route('task_statuses.destroy', $taskStatus->id) }}' data-confirm="Вы уверены?" data-method="delete" rel="nofollow"> Удалить </a>/
-
-{{--                            <input type="submit" value="Сохранить" data-disable-with="Сохраняем">--}}
-
-{{--                            <a href="{{ route('task_statuses.destroy', $taskStatus->id) }}" data-confirm="Вы уверены?" data-method="delete" rel="nofollow">Delete</a>--}}
-
                             <a href='{{ route('task_statuses.edit', $taskStatus->id) }}'> Изменить </a>
                         </td>
+                        @endif
+{{--                        @endcanany--}}
                     </tr>
                 @endforeach
                 </tbody>
