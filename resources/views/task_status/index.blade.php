@@ -4,12 +4,9 @@
     <div class="container-lg">
         <h1 class="mt-5 mb-3">Статусы</h1>
 
-{{--        @can('create', App\Models\TaskStatus::class)--}}
-        @if (Auth::check())
+        @auth
             <a href='{{ route('task_statuses.create')}}'> Создать статус </a>
-        @endif
-
-
+        @endauth
         <div class="table-responsive mb-5">
             <table class="table table-bordered table-hover text-nowrap">
                 <tbody>
@@ -17,9 +14,9 @@
                     <th>ID</th>
                     <th>Имя</th>
                     <th>Дата создания</th>
-                    @if (Auth::check())
+                    @auth
                         <th>Действия</th>
-                    @endif
+                    @endauth
                 </tr>
 
                 @foreach ($taskStatuses as $taskStatus)
@@ -28,14 +25,12 @@
                         <td>{{ $taskStatus->name }}</td>
                         <td>{{ $taskStatus->created_at }}</td>
 
-{{--                        @canany(['update', 'view', 'delete'], $taskStatus)--}}
-                        @if (Auth::check())
+                        @auth
                         <td>
                             <a href='{{ route('task_statuses.destroy', $taskStatus->id) }}' data-confirm="Вы уверены?" data-method="delete" rel="nofollow"> Удалить </a>/
                             <a href='{{ route('task_statuses.edit', $taskStatus->id) }}'> Изменить </a>
                         </td>
-                        @endif
-{{--                        @endcanany--}}
+                        @endauth
                     </tr>
                 @endforeach
                 </tbody>

@@ -14,6 +14,7 @@ class TaskStatusTest extends TestCase
 
     private TaskStatus $taskStatus;
     private User $user;
+    private array $data;
 
     protected function setUp(): void
     {
@@ -21,6 +22,7 @@ class TaskStatusTest extends TestCase
 
         $this->taskStatus = TaskStatus::factory()->create();
         $this->user = User::factory()->create();
+        $this->data = ['name' => 'newTestStatus'];
     }
 
     public function testIndex(): void
@@ -45,22 +47,20 @@ class TaskStatusTest extends TestCase
 
     public function testStoreWithoutAuth(): void
     {
-        $data = ['name' => 'status'];
-        $this->post(route('task_statuses.store'), $data)
+        $this->post(route('task_statuses.store'), $this->data)
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('task_statuses', $data);
+        $this->assertDatabaseMissing('task_statuses', $this->data);
     }
 
     public function testStoreWithAuth(): void
     {
-        $data = ['name' => 'newTestStatus'];
         $this->actingAs($this->user)
-            ->post(route('task_statuses.store'), $data)
+            ->post(route('task_statuses.store'), $this->data)
             ->assertRedirect(route('task_statuses.index'))
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('task_statuses', $data);
+        $this->assertDatabaseHas('task_statuses', $this->data);
     }
 
     public function testEditWithoutAuth()
@@ -77,27 +77,23 @@ class TaskStatusTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
-    public function testUpdateWithAuth()
-    {
-        $data = ['name' => 'newTestStatus'];
-        $this->patch(route('task_statuses.update', $this->taskStatus), $data)
-            ->assertStatus(403);
-
-        $this->assertDatabaseMissing('task_statuses', $data);
-    }
-
     public function testUpdateWithoutAuth()
     {
-        $data = ['name' => 'newTestStatus'];
+        $this->patch(route('task_statuses.update', $this->taskStatus), $this->data)
+            ->assertStatus(403);
+
+        $this->assertDatabaseMissing('task_statuses', $this->data);
+    }
+
+    public function testUpdateWithAuth()
+    {
         $this->actingAs($this->user)
-            ->patch(route('task_statuses.update', $this->taskStatus), $data)
+            ->patch(route('task_statuses.update', $this->taskStatus), $this->data)
             ->assertRedirect(route('task_statuses.index'))
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('task_statuses', $data);
-        $this->assertDatabaseMissing('task_statuses', [
-            'name' => $this->taskStatus['name']
-        ]);
+        $this->assertDatabaseHas('task_statuses', $this->data);
+        $this->assertDatabaseMissing('task_statuses', $this->taskStatus->toArray());
     }
 
     public function testDestroyWithoutAuth()
@@ -105,9 +101,7 @@ class TaskStatusTest extends TestCase
         $this->delete(route('task_statuses.destroy', $this->taskStatus))
             ->assertStatus(403);
 
-        $this->assertDatabaseHas('task_statuses', [
-            'name' => $this->taskStatus['name']
-        ]);
+        $this->assertDatabaseHas('task_statuses', $this->taskStatus->toArray());
     }
 
     public function testDestroyWithAuth()
@@ -117,8 +111,6 @@ class TaskStatusTest extends TestCase
             ->assertRedirect(route('task_statuses.index'))
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseMissing('task_statuses', [
-            'name' => $this->taskStatus['name']
-        ]);
+        $this->assertDatabaseMissing('task_statuses', $this->taskStatus->toArray());
     }
 }

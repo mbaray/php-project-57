@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
     public function index()
     {
         $tasks = DB::table('tasks')->paginate(10);
@@ -22,21 +27,15 @@ class TaskController extends Controller
 
     public function create()
     {
-//        $this->authorize('create', Task::class);
-
         $task = new Task();
-//        $users = User::
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
-//        $users = DB::table('users')->get();
 
         return view('task.create', compact('task', 'users', 'taskStatuses'));
     }
 
     public function store(Request $request)
     {
-//        $this->authorize('create', TaskStatus::class);
-
         $data = $this->validate($request, [
             'name' => 'required',
             'description' => 'nullable',
@@ -48,26 +47,18 @@ class TaskController extends Controller
         $task->fill($data);
         $task->creator()->associate(Auth::user());
         $task->save();
+        flash(__('messages.task.create.success'))->success();
 
         return redirect()->route('tasks.index');
     }
 
     public function show(Task $task)
     {
-//        $url = DB::table('urls')->find($id);
-//        abort_unless($task, 404);
-
-//        $checks = DB::table('url_checks')
-//            ->where('url_id', $id)
-//            ->orderByDesc('created_at')
-//            ->get();
-
         return view('task.show', compact('task'));
     }
 
     public function edit(Task $task)
     {
-//        $this->authorize('update', $taskStatus);
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
 
@@ -76,8 +67,6 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-//        $this->authorize('update', $taskStatus);
-//        $taskStatus = TaskStatus::findOrFail($id);
         $data = $this->validate($request, [
             'name' => 'required',
             'description' => 'nullable',
@@ -87,17 +76,20 @@ class TaskController extends Controller
 
         $task->fill($data);
         $task->save();
+        flash(__('messages.task.update.success'))->success();
 
         return redirect()->route('tasks.index');
     }
 
     public function destroy(Task $task)
     {
-//        $this->authorize('delete', $taskStatus);
-//        $taskStatus = TaskStatus::find($id);
         if ($task) {
             $task->delete();
+            flash(__('messages.task.delete.success'))->success();
+        } else {
+            flash(__('messages.task.delete.fail'))->error();
         }
+
         return redirect()->route('tasks.index');
     }
 }

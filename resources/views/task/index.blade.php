@@ -4,10 +4,9 @@
     <div class="container-lg">
         <h1 class="mt-5 mb-3">Задачи</h1>
 
-        @if (Auth::check())
+        @auth
             <a href='{{ route('tasks.create')}}'> Создать задачу </a>
-        @endif
-
+        @endauth
 
         <div class="table-responsive mb-5">
             <table class="table table-bordered table-hover text-nowrap">
@@ -19,9 +18,9 @@
                     <th>Автор</th>
                     <th>Исполнитель</th>
                     <th>Дата создания</th>
-                    @if (Auth::check())
-                        <th>Действия</th>
-                    @endif
+                    @auth
+                    <th>Действия</th>
+                    @endauth
                 </tr>
 
                 @foreach ($tasks as $task)
@@ -33,12 +32,14 @@
                         <td>{{ $users[$task->assigned_to_id] ?? ''}}</td>
                         <td>{{ $task->created_at }}</td>
 
-                        @if (Auth::check())
+                        @auth
                         <td>
+                            @if($task->created_by_id === auth()->user()->id)
                             <a href='{{ route('tasks.destroy', $task->id) }}' data-confirm="Вы уверены?" data-method="delete" rel="nofollow"> Удалить </a>/
+                            @endif
                             <a href='{{ route('tasks.edit', $task->id) }}'> Изменить </a>
                         </td>
-                        @endif
+                        @endauth
                     </tr>
                 @endforeach
                 </tbody>

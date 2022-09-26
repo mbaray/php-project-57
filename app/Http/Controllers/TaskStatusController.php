@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class TaskStatusController extends Controller
 {
-//    public function __construct()
-//    {
-//        $this->authorizeResource(TaskStatus::class, 'task_status');
-//    }
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class, 'task_status');
+    }
 
     public function index()
     {
@@ -22,8 +22,6 @@ class TaskStatusController extends Controller
 
     public function create()
     {
-        $this->authorize('create', TaskStatus::class);
-
         $taskStatus = new TaskStatus();
 
         return view('task_status.create', compact('taskStatus'));
@@ -31,8 +29,6 @@ class TaskStatusController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('create', TaskStatus::class);
-
         $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses',
         ]);
@@ -41,26 +37,18 @@ class TaskStatusController extends Controller
         $taskStatus->fill($data);
         $taskStatus->save();
 
-        return redirect()->route('task_statuses.index');
-    }
+        flash(__('messages.task_status.create.success'))->success();
 
-    public function show(TaskStatus $taskStatus)
-    {
-        //
+        return redirect()->route('task_statuses.index');
     }
 
     public function edit(TaskStatus $taskStatus)
     {
-//        $taskStatus = TaskStatus::findOrFail($id);
-        $this->authorize('update', $taskStatus);
-
         return view('task_status.edit', compact('taskStatus'));
     }
 
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        $this->authorize('update', $taskStatus);
-//        $taskStatus = TaskStatus::findOrFail($id);
         $data = $this->validate($request, [
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
@@ -68,15 +56,18 @@ class TaskStatusController extends Controller
         $taskStatus->fill($data);
         $taskStatus->save();
 
+        flash(__('messages.task_status.update.success'))->success();
+
         return redirect()->route('task_statuses.index');
     }
 
     public function destroy(TaskStatus $taskStatus)
     {
-        $this->authorize('delete', $taskStatus);
-//        $taskStatus = TaskStatus::find($id);
-        if ($taskStatus) {
+        if ($taskStatus->tasks->isEmpty()) {
             $taskStatus->delete();
+            flash(__('messages.task_status.delete.success'))->success();
+        } else {
+            flash(__('messages.task_status.delete.fail'))->error();
         }
         return redirect()->route('task_statuses.index');
     }

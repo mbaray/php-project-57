@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\TaskStatus;
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
-class TaskStatusPolicy
+class TaskPolicy
 {
     use HandlesAuthorization;
 
@@ -16,7 +16,7 @@ class TaskStatusPolicy
         return true;
     }
 
-    public function view(?User $user, TaskStatus $taskStatus)
+    public function view(?User $user, Task $task)
     {
         return true;
     }
@@ -26,13 +26,13 @@ class TaskStatusPolicy
         return Auth::check();
     }
 
-    public function update(User $user, TaskStatus $taskStatus)
+    public function update(User $user, Task $task)
     {
         return Auth::check();
     }
 
-    public function delete(User $user, TaskStatus $taskStatus)
+    public function delete(User $user, Task $task)
     {
-        return Auth::check();
+        return $user->id === $task->creator->id;
     }
 }
