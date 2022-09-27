@@ -1,18 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
+    <h1 class='font-semibold text-xl text-gray-800'>
+        Создать статус
+    </h1>
     {{ Form::model($taskStatus, ['route' => 'task_statuses.store']) }}
         @include('task_status.form')
-        {{ Form::submit('Создать') }}
+        {{ Form::submit('Создать', ['class' => 'btn btn-outline-success mb-2']) }}
     {{ Form::close() }}
 @endsection

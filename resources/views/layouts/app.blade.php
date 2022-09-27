@@ -18,58 +18,64 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
             <!-- Page Heading -->
             <header class='bg-white shadow'>
-                <div class='max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex'>
-                    <!-- Logo -->
-                    <div class='shrink-0 flex items-center'>
-                        <h2 class='font-semibold text-xl text-gray-800 leading-tight'>
-                            <a href='{{ route('dashboard') }}'> Менеджер задач </a>
-                        </h2>
+                <div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                    <div class='flex justify-between h-16'>
+                        <div class='flex'>
+                            <!-- Logo -->
+                            <div class='shrink-0 flex items-center'>
+                                <h2 class='font-semibold text-xl text-gray-800 leading-tight'>
+                                    <a href='{{ route('dashboard') }}'> Менеджер задач </a>
+                                </h2>
+                            </div>
+
+                            <!-- Navigation Links -->
+                            <div class='shrink-0 flex items-center'>
+                                <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
+                                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                                        {{ __('Задачи') }}
+                                    </x-nav-link>
+                                </div>
+                                <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
+                                    <x-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.index')">
+                                        {{ __('Статусы') }}
+                                    </x-nav-link>
+                                </div>
+                                <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
+                                    <x-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.index')">
+                                        {{ __('Метки') }}
+                                    </x-nav-link>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Settings Dropdown -->
+                        <div class='hidden sm:flex sm:items-center sm:ml-6'>
+                            @auth
+                                <form method='POST' action="{{ route('logout') }}">
+                                    @csrf
+                                    <a class='btn btn-outline-success' href="{{ route('logout') }} " onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </a>
+                                </form>
+                            @endauth
+
+                            @guest
+                            <div>
+                                <a class='btn btn-outline-success' href="{{ route('login') }}"> Вход </a>
+                                <a class='btn btn-outline-success' href="{{ route('register') }}"> Регистрация </a>
+                            </div>
+                            @endguest
+                        </div>
                     </div>
-
-                    <!-- Navigation Links -->
-                    <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
-                        <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
-                            {{ __('Задачи') }}
-                        </x-nav-link>
-                    </div>
-                    <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
-                        <x-nav-link :href="route('task_statuses.index')" :active="request()->routeIs('task_statuses.index')">
-                            {{ __('Статусы') }}
-                        </x-nav-link>
-                    </div>
-                    <div class='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
-                        <x-nav-link :href="route('labels.index')" :active="request()->routeIs('labels.index')">
-                            {{ __('Метки') }}
-                        </x-nav-link>
-                    </div>
-
-
-
-{{--                @auth--}}
-{{--                      Рега--}}
-{{--                        <button type='button' class='btn btn-info' href="route('logout')"> Выход </button>--}}
-{{--                        <a href="route('logout')" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true"> Выход </a>--}}
-{{--                    @endauth--}}
-
-{{--                    @guest--}}
-{{--                        Гость--}}
-{{--                        <a href="route('login')" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true"> Вход </a>--}}
-{{--                        <button type='button' class='btn btn-info' href="route('login')"> Вход </button>--}}
-{{--                        <button type='button' class='btn btn-info'href="route('register')"> Регистрация </button>--}}
-{{--                    @endguest--}}
-
                 </div>
             </header>
 
             <!-- Page Content -->
             <main>
-{{--                {{ $slot }}--}}
                 <div class='container mt-3'>
-                @include('flash::message')
+                    @include('flash::message')
                 </div>
 
                 @yield('content')

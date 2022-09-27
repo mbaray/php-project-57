@@ -1,19 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    @if ($errors->any())
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <h1 class='font-semibold text-xl text-gray-800'>
+        Изменение статуса
+    </h1>
 
-{{--    {{ Form::model($taskStatus, ['route' => ['task_statuses.update', $taskStatus], 'method' => 'PATCH']) }}--}}
     {{ Form::model($taskStatus, ['method' => 'PATCH', 'url' => route('task_statuses.update', $taskStatus)]) }}
     @include('task_status.form')
-        {{ Form::submit('Обновить') }}
+        {{ Form::submit('Обновить', ['class' => 'btn btn-outline-success mb-2']) }}
     {{ Form::close() }}
 @endsection

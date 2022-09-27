@@ -2,13 +2,15 @@
 
 @section('content')
     <div class="container-lg">
-        <h1 class="mt-5 mb-3">Статусы</h1>
+        <h1 class='font-semibold text-xl text-gray-800'>
+            Статусы
+        </h1>
 
         @auth
-            <a href='{{ route('task_statuses.create')}}'> Создать статус </a>
+            <a class='btn btn-outline-success mb-2' href='{{ route('task_statuses.create')}}'> Создать статус </a>
         @endauth
         <div class="table-responsive mb-5">
-            <table class="table table-bordered table-hover text-nowrap">
+            <table class="table table-success table-striped-columns">
                 <tbody>
                 <tr>
                     <th>ID</th>
@@ -27,8 +29,8 @@
 
                         @auth
                         <td>
-                            <a href='{{ route('task_statuses.destroy', $taskStatus->id) }}' data-confirm="Вы уверены?" data-method="delete" rel="nofollow"> Удалить </a>/
-                            <a href='{{ route('task_statuses.edit', $taskStatus->id) }}'> Изменить </a>
+                            <a href='{{ route('task_statuses.destroy', $taskStatus->id) }}' data-confirm="Вы уверены?" data-method="delete" rel="nofollow" class="text-danger"> Удалить </a>/
+                            <a href='{{ route('task_statuses.edit', $taskStatus->id) }}' class="text-success"> Изменить </a>
                         </td>
                         @endauth
                     </tr>
