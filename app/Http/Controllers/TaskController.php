@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
@@ -18,6 +19,11 @@ class TaskController extends Controller
 
     public function index()
     {
+//        return TaskStatus::firstWhere('name', 'новый')->id;
+//        return User::firstWhere('name', 'Кузьмина Николай Фёдорович')->id;
+//        ->collect()->get('id');
+//        ->get('id')
+
         $tasks = DB::table('tasks')->paginate(10);
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
@@ -30,8 +36,9 @@ class TaskController extends Controller
         $task = new Task();
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
 
-        return view('task.create', compact('task', 'users', 'taskStatuses'));
+        return view('task.create', compact('task', 'users', 'taskStatuses', 'labels'));
     }
 
     public function store(Request $request)
@@ -43,10 +50,20 @@ class TaskController extends Controller
             'assigned_to_id' => 'nullable|exists:users,id',
         ]);
 
+//        return $request->label_id;
+//        return var_dump(!isset($request->label_id[0]));
         $task = new Task();
-        $task->fill($data);
-        $task->creator()->associate(Auth::user());
-        $task->save();
+
+        $task->fill($data)
+            ->creator()
+            ->associate(Auth::user())
+            ->save();
+
+        if (isset($request->labels[0])) {
+            $task->labels()->attach($request->labels);
+//            return $task->labels;
+        }
+
         flash(__('messages.task.create.success'))->success();
 
         return redirect()->route('tasks.index');
@@ -61,8 +78,9 @@ class TaskController extends Controller
     {
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
 
-        return view('task.edit', compact('task', 'users', 'taskStatuses'));
+        return view('task.edit', compact('task', 'users', 'taskStatuses', 'labels'));
     }
 
     public function update(Request $request, Task $task)
@@ -76,6 +94,12 @@ class TaskController extends Controller
 
         $task->fill($data);
         $task->save();
+
+        $task->labels()->detach();
+        if (isset($request->labels[0])) {
+            $task->labels()->attach($request->labels);
+        }
+
         flash(__('messages.task.update.success'))->success();
 
         return redirect()->route('tasks.index');
@@ -84,6 +108,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         if ($task) {
+            $task->labels()->detach();
             $task->delete();
             flash(__('messages.task.delete.success'))->success();
         } else {

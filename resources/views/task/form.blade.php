@@ -18,4 +18,7 @@
 @enderror
 
 {{ Form::label('assigned_to_id', 'Исполнитель') }}<br>
-{{ Form::select('assigned_to_id', $users, null, ['placeholder' => '----------']) }}<br><br>
+{{ Form::select('assigned_to_id', $users, null, ['placeholder' => '----------']) }}<br>
+
+{{ Form::label('labels[]', 'Метки') }}<br>
+{{ Form::select('labels[]', $labels, null, ['placeholder' => '', 'class' => 'form', 'multiple']) }}<br><br>

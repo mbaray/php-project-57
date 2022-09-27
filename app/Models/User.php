@@ -44,11 +44,11 @@ class User extends Authenticatable
 
     public function tasksSet()
     {
-        return $this->hasMany('App\Models\Task', 'created_by_id');
+        return $this->hasMany(Task::class, 'created_by_id');
     }
 
     public function tasksForExecution()
     {
-        return $this->hasMany('App\Models\Task', 'assigned_to_id');
+        return $this->hasMany(Task::class, 'assigned_to_id');
     }
 }

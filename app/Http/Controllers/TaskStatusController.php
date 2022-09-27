@@ -34,8 +34,7 @@ class TaskStatusController extends Controller
         ]);
 
         $taskStatus = new TaskStatus();
-        $taskStatus->fill($data);
-        $taskStatus->save();
+        $taskStatus->fill($data)->save();
 
         flash(__('messages.task_status.create.success'))->success();
 
@@ -53,8 +52,7 @@ class TaskStatusController extends Controller
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
         ]);
 
-        $taskStatus->fill($data);
-        $taskStatus->save();
+        $taskStatus->fill($data)->save();
 
         flash(__('messages.task_status.update.success'))->success();
 

@@ -5,6 +5,6 @@
 
     {{ Form::model($task, ['route' => 'tasks.store']) }}
         @include('task.form')
-    {{ Form::submit('Создать') }}
+        {{ Form::submit('Создать') }}
     {{ Form::close() }}
 @endsection

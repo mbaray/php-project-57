@@ -10,4 +10,7 @@
     Описание: {{ $task->description }}
     <br>
     Метки:
+    @foreach ($task->labels as $label)
+        {{ $label->name }}
+    @endforeach
 @endsection
