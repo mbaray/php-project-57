@@ -9,6 +9,8 @@ use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -17,18 +19,33 @@ class TaskController extends Controller
         $this->authorizeResource(Task::class, 'task');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-//        return TaskStatus::firstWhere('name', 'новый')->id;
-//        return User::firstWhere('name', 'Кузьмина Николай Фёдорович')->id;
-//        ->collect()->get('id');
-//        ->get('id')
+        $filters = $request->input('filter');
+//        return $filters;
 
-        $tasks = DB::table('tasks')->paginate(10);
+//        $tasks = DB::table('tasks')
+////            ->where('status_id', $filters['status_id'])
+////            ->where('created_by_id', $filters['created_by_id'])
+////            ->where('assigned_to_id', $filters['assigned_to_id'])
+//            ->orderBy('id')
+//            ->paginate(10);
+
+
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            ])
+            ->orderBy('id')
+            ->paginate(10);
+//        return $filters;
+
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
 
-        return view('task.index', compact('tasks', 'users', 'taskStatuses'));
+        return view('task.index', compact('tasks', 'users', 'taskStatuses', 'filters'));
     }
 
     public function create()

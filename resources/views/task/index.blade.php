@@ -4,6 +4,24 @@
     <div class="container-lg">
         <h1 class="mt-5 mb-3">Задачи</h1>
 
+{{--        <div class="dropdown">--}}
+{{--            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                Статус--}}
+{{--            </button>--}}
+{{--            <ul class="dropdown-menu">--}}
+{{--                <li><a class="dropdown-item" href="#">Действие</a></li>--}}
+{{--                <li><a class="dropdown-item" href="#">Другое действие</a></li>--}}
+{{--                <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+
+        {{Form::open(['route' => 'tasks.index', 'method' => 'GET'])}}
+            {{ Form::select('filter[status_id]', $taskStatuses, $filters['status_id'] ?? null, ['placeholder' => 'Статус'])}}
+            {{ Form::select('filter[created_by_id]', $users, $filters['created_by_id'] ?? null, ['placeholder' => 'Автор'])}}
+            {{ Form::select('filter[assigned_to_id]', $users, $filters['assigned_to_id'] ?? null, ['placeholder' => 'Исполнитель'])}}
+            {{ Form::submit('Применить') }}
+        {{Form::close()}}<br><br>
+
         @auth
             <a href='{{ route('tasks.create')}}'> Создать задачу </a>
         @endauth
