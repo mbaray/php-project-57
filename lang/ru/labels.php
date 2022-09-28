@@ -8,6 +8,7 @@ return [
     'LogOut' => 'Выход',
     'SignUp' => 'Регистрация',
     'LogIn' => 'Вход',
+    'Login' => 'Войти',
     'TaskManager' => 'Менеджер задач',
     'Create' => 'Создать',
     'Update' => 'Обновить',

@@ -49,9 +49,9 @@
                     </a>
                 @endif
 
-                <x-primary-button class="ml-3">
-                    {{ __('Войти') }}
-                </x-primary-button>
+                <button type="submit" class="inline-flex items-center py-2 px-4 rounded ml-4">
+                    {{ __('labels.Login') }}
+                </button>
             </div>
         </form>
     </x-auth-card>
