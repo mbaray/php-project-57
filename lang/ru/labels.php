@@ -28,4 +28,6 @@ return [
     'confirmation' => 'Вы уверены?',
     'Author' => 'Автор',
     'Apply' => 'Применить',
+    'newTask' => 'Создай свою первую задачу!',
+    'TaskManagerInLaravel' => 'Это простой менеджер задач на Laravel'
 ];
