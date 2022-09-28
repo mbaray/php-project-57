@@ -22,6 +22,10 @@ class TaskTest extends TestCase
 
         $this->user = User::factory()->create();
         $this->task = Task::factory()->create();
+        $this->data = [
+            'name' => 'newTestTask',
+            'status_id' => $this->task->status_id
+        ];
     }
 
 
@@ -54,30 +58,30 @@ class TaskTest extends TestCase
 
     public function testStoreWithoutAuth(): void
     {
-        $data = [
-            'name' => 'test',
-            'status_id' => $this->task->status->id
-        ];
+//        $data = [
+//            'name' => 'newTestTask',
+//            'status_id' => $this->task->status_id
+//        ];
 
-        $this->post(route('tasks.store'), $data)
+        $this->post(route('tasks.store'), $this->data)
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('tasks', $data);
+        $this->assertDatabaseMissing('tasks', $this->data);
     }
 
     public function testStoreWithAuth(): void
     {
-        $data = [
-            'name' => 'test',
-            'status_id' => $this->task->status->id
-        ];
+//        $data = [
+//            'name' => 'newTestTask',
+//            'status_id' => $this->task->status_id
+//        ];
 
         $this->actingAs($this->user)
-            ->post(route('tasks.store'), $data)
+            ->post(route('tasks.store'), $this->data)
             ->assertRedirect(route('tasks.index'))
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('tasks', $data);
+        $this->assertDatabaseHas('tasks', $this->data);
     }
 
     public function testEditWithoutAuth()
@@ -96,39 +100,33 @@ class TaskTest extends TestCase
 
     public function testUpdateWithoutAuth()
     {
-        $data = [
-            'name' => 'test',
-            'status_id' => $this->task->status->id
-        ];
-        $this->patch(route('tasks.update', $this->task), $data)
+//        $data = [
+//            'name' => 'newTestTask',
+//            'status_id' => $this->task->status_id
+//        ];
+        $this->patch(route('tasks.update', $this->task), $this->data)
             ->assertStatus(403);
 
-        $this->assertDatabaseMissing('tasks', [
-            'name' => 'test',
-            'status_id' => $this->task->status->id
-        ]);
+        $this->assertDatabaseMissing('tasks', $this->data);
     }
 
     public function testUpdateWithAuth()
     {
-        $data = [
-            'name' => 'test2',
-            'status_id' => $this->task->status->id
-        ];
+//        $data = [
+//            'name' => 'newTestTask',
+//            'status_id' => $this->task->status_id
+//        ];
 
         $this->actingAs($this->user)
-            ->patch(route('tasks.update', $this->task), $data)
+            ->patch(route('tasks.update', $this->task), $this->data)
             ->assertRedirect(route('tasks.index'))
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseHas('tasks', [
-            'name' => 'test2',
-            'status_id' => $this->task->status->id
-        ]);
+        $this->assertDatabaseHas('tasks', $this->data);
 
-//        $this->assertDatabaseMissing('tasks', [
-//            'name' => 'test'
-//        ]);
+        $this->assertDatabaseMissing('tasks', [
+            'name' => $this->task->name
+        ]);
     }
 
     public function testDestroyWithoutAuth()
@@ -136,25 +134,33 @@ class TaskTest extends TestCase
         $this->delete(route('tasks.destroy', $this->task))
             ->assertStatus(403);
 
-//        $this->assertDatabaseHas('tasks', $this->task->toArray());
+        $this->assertDatabaseHas('tasks', $this->task->toArray());
     }
 
     public function testDestroyWithAuth()
     {
+//        print_r($this->user);
         $this->actingAs($this->user)
             ->delete(route('tasks.destroy', $this->task))
             ->assertStatus(403);
 
-//        $this->assertDatabaseHas('tasks', $this->task->toArray());
+        $this->assertDatabaseHas('tasks', $this->task->toArray());
     }
 
     public function testDestroyWithAuthFromTheOwner()
     {
+//        print_r($this->task->creator->id);
+//        print_r(Task::all());
+//        print_r($this->task->creator);
         $this->actingAs($this->task->creator)
             ->delete(route('tasks.destroy', $this->task))
             ->assertRedirect(route('tasks.index'))
             ->assertSessionHasNoErrors();
 
 //        $this->assertDatabaseMissing('tasks', $this->task->toArray());
+        $this->assertDatabaseMissing('tasks', [
+            'name' => 'testTask',
+            'created_by_id' => $this->task->creator->id
+        ]);
     }
 }

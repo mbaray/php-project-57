@@ -14,7 +14,7 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
+            'name' => 'testTask',
             'description' => fake()->paragraph(),
             'status_id' => TaskStatus::factory(),
             'created_by_id' => User::factory(),

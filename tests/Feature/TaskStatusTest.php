@@ -101,7 +101,7 @@ class TaskStatusTest extends TestCase
         $this->delete(route('task_statuses.destroy', $this->taskStatus))
             ->assertStatus(403);
 
-//        $this->assertDatabaseHas('task_statuses', $this->taskStatus->toArray());
+        $this->assertDatabaseHas('task_statuses', $this->taskStatus->toArray());
     }
 
     public function testDestroyWithAuth()
