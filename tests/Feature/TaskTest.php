@@ -134,7 +134,10 @@ class TaskTest extends TestCase
         $this->delete(route('tasks.destroy', $this->task))
             ->assertStatus(403);
 
-        $this->assertDatabaseHas('tasks', $this->task->toArray());
+        $this->assertDatabaseHas('tasks', [
+            'name' => 'testTask',
+            'description' => $this->task->description,
+        ]);
     }
 
     public function testDestroyWithAuth()
@@ -144,7 +147,10 @@ class TaskTest extends TestCase
             ->delete(route('tasks.destroy', $this->task))
             ->assertStatus(403);
 
-        $this->assertDatabaseHas('tasks', $this->task->toArray());
+        $this->assertDatabaseHas('tasks', [
+            'name' => 'testTask',
+            'description' => $this->task->description,
+        ]);
     }
 
     public function testDestroyWithAuthFromTheOwner()

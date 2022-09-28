@@ -93,7 +93,9 @@ class TaskStatusTest extends TestCase
             ->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('task_statuses', $this->data);
-        $this->assertDatabaseMissing('task_statuses', $this->taskStatus->toArray());
+        $this->assertDatabaseMissing('task_statuses', [
+            'name' => 'testStatus',
+        ]);
     }
 
     public function testDestroyWithoutAuth()
@@ -101,7 +103,9 @@ class TaskStatusTest extends TestCase
         $this->delete(route('task_statuses.destroy', $this->taskStatus))
             ->assertStatus(403);
 
-        $this->assertDatabaseHas('task_statuses', $this->taskStatus->toArray());
+        $this->assertDatabaseHas('task_statuses', [
+            'name' => 'testStatus',
+        ]);
     }
 
     public function testDestroyWithAuth()
@@ -111,6 +115,8 @@ class TaskStatusTest extends TestCase
             ->assertRedirect(route('task_statuses.index'))
             ->assertSessionHasNoErrors();
 
-        $this->assertDatabaseMissing('task_statuses', $this->taskStatus->toArray());
+        $this->assertDatabaseMissing('task_statuses', [
+            'name' => 'testStatus',
+        ]);
     }
 }
