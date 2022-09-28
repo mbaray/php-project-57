@@ -31,6 +31,7 @@ class LabelController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|unique:labels',
+            'description' => 'nullable'
         ]);
 
         $label = new Label();
@@ -50,6 +51,7 @@ class LabelController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|unique:labels,name,' . $label->id,
+            'description' => 'nullable'
         ]);
 
         $label->fill($data)->save();

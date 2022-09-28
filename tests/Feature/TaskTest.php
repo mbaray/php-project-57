@@ -15,6 +15,7 @@ class TaskTest extends TestCase
 
     private Task $task;
     private User $user;
+    private array $data;
 
     protected function setUp(): void
     {

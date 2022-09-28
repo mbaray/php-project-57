@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -116,6 +117,21 @@ class TaskStatusTest extends TestCase
             ->assertSessionHasNoErrors();
 
         $this->assertDatabaseMissing('task_statuses', [
+            'name' => 'testStatus',
+        ]);
+    }
+
+    public function testDestroyLinkedStatusWithAuth()
+    {
+        $task = Task::factory()->create([
+            'status_id' => $this->taskStatus->id,
+        ]);
+
+        $this->actingAs($this->user)
+            ->delete(route('task_statuses.destroy', $this->taskStatus));
+
+        $this->assertDatabaseHas('task_statuses', [
+            'id' => $this->taskStatus->id,
             'name' => 'testStatus',
         ]);
     }
