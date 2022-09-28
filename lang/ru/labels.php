@@ -29,5 +29,7 @@ return [
     'Author' => 'Автор',
     'Apply' => 'Применить',
     'newTask' => 'Создай свою первую задачу!',
-    'TaskManagerInLaravel' => 'Это простой менеджер задач на Laravel'
+    'PushMe' => 'Нажми меня',
+    'TaskManagerInLaravel' => 'Это простой менеджер задач на Laravel',
+    'hexlet' => 'Привет от Хекслета!'
 ];
