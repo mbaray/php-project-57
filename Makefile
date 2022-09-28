@@ -12,7 +12,7 @@ setup:
 	npm run build
 
 lint:
-	composer exec --verbose phpcs -- --standard=PSR12 routes
+	composer exec --verbose phpcs -- --standard=PSR12 routes app/Http/Controllers/LabelController.php app/Http/Controllers/TaskController.php app/Http/Controllers/TaskStatusController.php
 
 test:
 	php artisan test

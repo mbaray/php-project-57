@@ -67,13 +67,13 @@ class LabelTest extends TestCase
         $this->assertDatabaseHas('labels', $this->data);
     }
 
-    public function testEditWithoutAuth()
+    public function testEditWithoutAuth(): void
     {
         $this->get(route('labels.edit', $this->label))
             ->assertStatus(403);
     }
 
-    public function testEditWithAuth()
+    public function testEditWithAuth(): void
     {
         $this->actingAs($this->user)
             ->get(route('labels.edit', $this->label))
@@ -81,7 +81,7 @@ class LabelTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
-    public function testUpdateWithoutAuth()
+    public function testUpdateWithoutAuth(): void
     {
         $this->patch(route('labels.update', $this->label), $this->data)
             ->assertStatus(403);
@@ -89,7 +89,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseMissing('labels', $this->data);
     }
 
-    public function testUpdateWithAuth()
+    public function testUpdateWithAuth(): void
     {
         $this->actingAs($this->user)
             ->patch(route('labels.update', $this->label), $this->data)
@@ -102,7 +102,7 @@ class LabelTest extends TestCase
         ]);
     }
 
-    public function testDestroyWithoutAuth()
+    public function testDestroyWithoutAuth(): void
     {
         $this->delete(route('labels.destroy', $this->label))
             ->assertStatus(403);
@@ -112,7 +112,7 @@ class LabelTest extends TestCase
         ]);
     }
 
-    public function testDestroyWithAuth()
+    public function testDestroyWithAuth(): void
     {
         $this->actingAs($this->user)
             ->delete(route('labels.destroy', $this->label))
@@ -124,11 +124,9 @@ class LabelTest extends TestCase
         ]);
     }
 
-    public function testDestroyLinkedLabelWithAuth()
+    public function testDestroyLinkedLabelWithAuth(): void
     {
         $task = Task::factory()->hasAttached($this->label)->create();
-//        print_r($task);
-//        print_r($task->labels);
 
         $this->actingAs($this->user)
             ->delete(route('labels.destroy', $this->label));

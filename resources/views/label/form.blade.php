@@ -1,10 +1,10 @@
-{{ Form::label('name', 'Имя') }}<br>
+{{ Form::label('name', __('labels.Name')) }}<br>
 {{ Form::text('name', $label->name, ['class' => 'rounded border-gray-300']) }}<br>
 @error('name')
-<div class="text-danger">
+<div class='text-danger'>
     {{ $message }}
 </div>
 @enderror
 
-{{ Form::label('description', 'Описание') }}<br>
+{{ Form::label('description', __('labels.Description')) }}<br>
 {{ Form::textarea('description', $label->description, ['class' => 'rounded border-gray-300']) }}<br>

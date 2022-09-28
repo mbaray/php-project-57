@@ -6,6 +6,8 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,19 +21,9 @@ class TaskController extends Controller
         $this->authorizeResource(Task::class, 'task');
     }
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $filters = $request->input('filter');
-//        return $filters;
-
-//        $tasks = DB::table('tasks')
-////            ->where('status_id', $filters['status_id'])
-////            ->where('created_by_id', $filters['created_by_id'])
-////            ->where('assigned_to_id', $filters['assigned_to_id'])
-//            ->orderBy('id')
-//            ->paginate(10);
-
-
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 AllowedFilter::exact('status_id'),
@@ -40,7 +32,6 @@ class TaskController extends Controller
             ])
             ->orderBy('id')
             ->paginate(10);
-//        return $filters;
 
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
@@ -48,7 +39,7 @@ class TaskController extends Controller
         return view('task.index', compact('tasks', 'users', 'taskStatuses', 'filters'));
     }
 
-    public function create()
+    public function create(): View
     {
         $task = new Task();
         $users = User::pluck('name', 'id');
@@ -58,7 +49,7 @@ class TaskController extends Controller
         return view('task.create', compact('task', 'users', 'taskStatuses', 'labels'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $data = $this->validate($request, [
             'name' => 'required',
@@ -67,10 +58,7 @@ class TaskController extends Controller
             'assigned_to_id' => 'nullable|exists:users,id',
         ]);
 
-//        return $request->label_id;
-//        return var_dump(!isset($request->label_id[0]));
         $task = new Task();
-
         $task->fill($data)
             ->creator()
             ->associate(Auth::user())
@@ -78,7 +66,6 @@ class TaskController extends Controller
 
         if (isset($request->labels[0])) {
             $task->labels()->attach($request->labels);
-//            return $task->labels;
         }
 
         flash(__('messages.task.create.success'))->success();
@@ -86,12 +73,12 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function show(Task $task)
+    public function show(Task $task): View
     {
         return view('task.show', compact('task'));
     }
 
-    public function edit(Task $task)
+    public function edit(Task $task): View
     {
         $users = User::pluck('name', 'id');
         $taskStatuses = TaskStatus::pluck('name', 'id');
@@ -100,7 +87,7 @@ class TaskController extends Controller
         return view('task.edit', compact('task', 'users', 'taskStatuses', 'labels'));
     }
 
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Task $task): RedirectResponse
     {
         $data = $this->validate($request, [
             'name' => 'required',
@@ -122,7 +109,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function destroy(Task $task)
+    public function destroy(Task $task): RedirectResponse
     {
         if ($task) {
             $task->labels()->detach();

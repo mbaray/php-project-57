@@ -11,27 +11,27 @@ class LabelPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(?User $user)
+    public function viewAny(?User $user): bool
     {
         return true;
     }
 
-    public function view(?User $user, Label $label)
+    public function view(?User $user, Label $label): bool
     {
         return true;
     }
 
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return Auth::check();
     }
 
-    public function update(User $user, Label $label)
+    public function update(User $user, Label $label): bool
     {
         return Auth::check();
     }
 
-    public function delete(User $user, Label $label)
+    public function delete(User $user, Label $label): bool
     {
         return Auth::check();
     }

@@ -2,11 +2,11 @@
 
 @section('content')
     <h1 class='font-semibold text-xl text-gray-800'>
-        Изменение задачи
+        {{ __('labels.EditTask') }}
     </h1>
 
     {{ Form::model($task, ['method' => 'PATCH', 'url' => route('tasks.update', $task)]) }}
         @include('task.form')
-        {{ Form::submit('Обновить', ['class' => 'btn btn-outline-success mb-2']) }}
+        {{ Form::submit(__('labels.Update'), ['class' => 'btn btn-outline-success mb-2']) }}
     {{ Form::close() }}
 @endsection

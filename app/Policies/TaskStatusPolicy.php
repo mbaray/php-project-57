@@ -11,27 +11,27 @@ class TaskStatusPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny(?User $user)
+    public function viewAny(?User $user): bool
     {
         return true;
     }
 
-    public function view(?User $user, TaskStatus $taskStatus)
+    public function view(?User $user, TaskStatus $taskStatus): bool
     {
         return true;
     }
 
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return Auth::check();
     }
 
-    public function update(User $user, TaskStatus $taskStatus)
+    public function update(User $user, TaskStatus $taskStatus): bool
     {
         return Auth::check();
     }
 
-    public function delete(User $user, TaskStatus $taskStatus)
+    public function delete(User $user, TaskStatus $taskStatus): bool
     {
         return Auth::check();
     }

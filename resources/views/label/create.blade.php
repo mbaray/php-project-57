@@ -2,11 +2,11 @@
 
 @section('content')
     <h1 class='font-semibold text-xl text-gray-800'>
-        Создать метку
+        {{ __('labels.CreateLabel') }}
     </h1>
 
     {{ Form::model($label, ['route' => 'labels.store']) }}
         @include('label.form')
-        {{ Form::submit('Создать', ['class' => 'btn btn-outline-success mb-2']) }}
+        {{ Form::submit(__('labels.Create'), ['class' => 'btn btn-outline-success mb-2']) }}
     {{ Form::close() }}
 @endsection

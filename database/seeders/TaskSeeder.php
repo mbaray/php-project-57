@@ -11,12 +11,7 @@ use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         Task::create([
             'name' => 'Исправить ошибку в какой-нибудь строке',

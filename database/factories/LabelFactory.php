@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class LabelFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => 'testLabel',

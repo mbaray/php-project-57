@@ -8,12 +8,7 @@ use Illuminate\Database\Seeder;
 
 class LabelSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         Label::create([
             'name' => 'ошибка',

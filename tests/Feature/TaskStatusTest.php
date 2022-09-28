@@ -64,13 +64,13 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseHas('task_statuses', $this->data);
     }
 
-    public function testEditWithoutAuth()
+    public function testEditWithoutAuth(): void
     {
         $this->get(route('task_statuses.edit', $this->taskStatus))
             ->assertStatus(403);
     }
 
-    public function testEditWithAuth()
+    public function testEditWithAuth(): void
     {
         $this->actingAs($this->user)
             ->get(route('task_statuses.edit', $this->taskStatus))
@@ -78,7 +78,7 @@ class TaskStatusTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
-    public function testUpdateWithoutAuth()
+    public function testUpdateWithoutAuth(): void
     {
         $this->patch(route('task_statuses.update', $this->taskStatus), $this->data)
             ->assertStatus(403);
@@ -86,7 +86,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseMissing('task_statuses', $this->data);
     }
 
-    public function testUpdateWithAuth()
+    public function testUpdateWithAuth(): void
     {
         $this->actingAs($this->user)
             ->patch(route('task_statuses.update', $this->taskStatus), $this->data)
@@ -99,7 +99,7 @@ class TaskStatusTest extends TestCase
         ]);
     }
 
-    public function testDestroyWithoutAuth()
+    public function testDestroyWithoutAuth(): void
     {
         $this->delete(route('task_statuses.destroy', $this->taskStatus))
             ->assertStatus(403);
@@ -109,7 +109,7 @@ class TaskStatusTest extends TestCase
         ]);
     }
 
-    public function testDestroyWithAuth()
+    public function testDestroyWithAuth(): void
     {
         $this->actingAs($this->user)
             ->delete(route('task_statuses.destroy', $this->taskStatus))
@@ -121,7 +121,7 @@ class TaskStatusTest extends TestCase
         ]);
     }
 
-    public function testDestroyLinkedStatusWithAuth()
+    public function testDestroyLinkedStatusWithAuth(): void
     {
         $task = Task::factory()->create([
             'status_id' => $this->taskStatus->id,

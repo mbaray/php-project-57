@@ -19,15 +19,9 @@ use App\Http\Controllers\LabelController;
 Route::get('/', function () {
     return view('welcome');
 })->name('dashboard');
-//})->middleware(['auth'])->name('dashboard');
 
-Route::resource('task_statuses', TaskStatusController::class);
-//->except([
-//    'create', 'edit', 'update', 'destroy'
-//]);
-
+Route::resource('task_statuses', TaskStatusController::class)->except(['show']);
 Route::resource('tasks', TaskController::class);
-
-Route::resource('labels', LabelController::class);
+Route::resource('labels', LabelController::class)->except(['show']);
 
 require __DIR__ . '/auth.php';

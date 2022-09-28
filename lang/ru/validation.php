@@ -171,5 +171,4 @@ return [
     'attributes' => [
         'password' => 'пароль',
     ],
-
 ];

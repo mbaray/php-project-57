@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TaskFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => 'testTask',
