@@ -31,7 +31,7 @@ return [
     'newTask' => 'Create your first task!',
     'PushMe' => 'Push me',
     'TaskManagerInLaravel' => 'This is a simple task manager on Laravel',
-    'hexlet' => 'Привет от Хекслета!',
-    'register' => 'Зарегистрировать',
-    'alredyRegister' => 'Уже зарегистрированы?'
+    'hexlet' => 'Greetings from Hexlet!',
+    'register' => 'Register',
+    'alredyRegister' => 'Already registered?'
 ];
