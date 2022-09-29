@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class LabelController extends Controller
 {
@@ -18,7 +19,8 @@ class LabelController extends Controller
 
     public function index(): View
     {
-        $labels = DB::table('labels')->orderBy('id')->paginate(10);
+//        $labels = DB::table('labels')->orderBy('id')->paginate(10);
+        $labels = QueryBuilder::for(Label::class)->orderBy('id')->paginate(10);
 
         return view('label.index', compact('labels'));
     }

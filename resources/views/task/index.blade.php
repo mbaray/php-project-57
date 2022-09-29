@@ -39,7 +39,7 @@
                         <td><a href='{{ route('tasks.show', $task->id)}}' class='text-primary'>{{ $task->name }}</a></td>
                         <td>{{ $users[$task->created_by_id] }}</td>
                         <td>{{ $users[$task->assigned_to_id] ?? ''}}</td>
-                        <td>{{ $task->created_at }}</td>
+                        <td>{{ $task->created_at->format('d.m.Y') }}</td>
 
                         @auth
                         <td>

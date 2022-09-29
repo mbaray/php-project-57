@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskStatusController extends Controller
 {
@@ -18,7 +19,10 @@ class TaskStatusController extends Controller
 
     public function index(): View
     {
-        $taskStatuses = DB::table('task_statuses')->orderBy('id')->paginate(10);
+//        $taskStatuses = DB::table('task_statuses')->orderBy('id')->paginate(10);
+        $taskStatuses = QueryBuilder::for(TaskStatus::class)
+            ->orderBy('id')
+            ->paginate(10);
 
         return view('task_status.index', compact('taskStatuses'));
     }

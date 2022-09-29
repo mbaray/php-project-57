@@ -25,8 +25,7 @@
                     <tr>
                         <td>{{ $taskStatus->id }}</td>
                         <td>{{ $taskStatus->name }}</td>
-                        <td>{{ $taskStatus->created_at }}</td>
-
+                        <td>{{ $taskStatus->created_at->format('d.m.Y') }}</td>
                         @auth
                         <td>
                             <a href='{{ route('task_statuses.destroy', $taskStatus->id) }}' data-confirm='{{ __('labels.confirmation') }}' data-method='delete' rel='nofollow' class='text-danger'> {{ __('labels.Delete') }} </a>/
