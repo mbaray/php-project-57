@@ -24,7 +24,7 @@ class TaskRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => __('messages.Task.unique'),
+            'name.unique' => __('messages.task.unique'),
         ];
     }
 }
