@@ -14,7 +14,7 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique',
+            'name' => 'required|unique:tasks',
             'description' => 'nullable',
             'status_id' => 'required|exists:task_statuses,id',
             'assigned_to_id' => 'nullable|exists:users,id',

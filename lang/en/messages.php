@@ -2,6 +2,7 @@
 
 return [
     'task' => [
+        'unique' => 'A task with this name already exists',
         'create' => [
             'success' => 'Task successfully created'
         ],
@@ -14,6 +15,7 @@ return [
         ]
     ],
     'task_status' => [
+        'unique' => 'A status with this name already exists',
         'create' => [
             'success' => 'Status successfully created'
         ],
@@ -26,6 +28,7 @@ return [
         ]
     ],
     'label' => [
+        'unique' => 'A label with this name already exists',
         'create' => [
             'success' => 'The label was created successfully'
         ],

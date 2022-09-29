@@ -28,4 +28,10 @@ return [
     'confirmation' => 'Are you sure?',
     'Author' => 'Author',
     'Apply' => 'Apply',
+    'newTask' => 'Create your first task!',
+    'PushMe' => 'Push me',
+    'TaskManagerInLaravel' => 'This is a simple task manager on Laravel',
+    'hexlet' => 'Привет от Хекслета!',
+    'register' => 'Зарегистрировать',
+    'alredyRegister' => 'Уже зарегистрированы?'
 ];

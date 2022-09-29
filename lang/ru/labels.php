@@ -32,7 +32,7 @@ return [
     'newTask' => 'Создай свою первую задачу!',
     'PushMe' => 'Нажми меня',
     'TaskManagerInLaravel' => 'Это простой менеджер задач на Laravel',
-    'hexlet' => 'Привет от Хекслета!',
-    'register' => 'Зарегистрировать',
-    'alredyRegister' => 'Уже зарегистрированы?'
+    'hexlet' => 'Greetings from Hexlet!',
+    'register' => 'Register',
+    'alredyRegister' => 'Already registered?'
 ];
