@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LabelRequest;
 use App\Models\Label;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,12 +30,13 @@ class LabelController extends Controller
         return view('label.create', compact('label'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(LabelRequest $request): RedirectResponse
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:labels',
-            'description' => 'nullable'
-        ]);
+//        $data = $this->validate($request, [
+//            'name' => 'required|unique:labels',
+//            'description' => 'nullable'
+//        ]);
+        $data = $request->validated();
 
         $label = new Label();
         $label->fill($data)->save();
@@ -49,12 +51,13 @@ class LabelController extends Controller
         return view('label.edit', compact('label'));
     }
 
-    public function update(Request $request, Label $label): RedirectResponse
+    public function update(LabelRequest $request, Label $label): RedirectResponse
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:labels,name,' . $label->id,
-            'description' => 'nullable'
-        ]);
+//        $data = $this->validate($request, [
+//            'name' => 'required|unique:labels,name,' . $label->id,
+//            'description' => 'nullable'
+//        ]);
+        $data = $request->validated();
 
         $label->fill($data)->save();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Label;
 use App\Models\Task;
 use App\Models\User;
@@ -49,14 +50,15 @@ class TaskController extends Controller
         return view('task.create', compact('task', 'users', 'taskStatuses', 'labels'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(TaskRequest $request): RedirectResponse
     {
-        $data = $this->validate($request, [
-            'name' => 'required',
-            'description' => 'nullable',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-        ]);
+//        $data = $this->validate($request, [
+//            'name' => 'required',
+//            'description' => 'nullable',
+//            'status_id' => 'required|exists:task_statuses,id',
+//            'assigned_to_id' => 'nullable|exists:users,id',
+//        ]);
+        $data = $request->validated();
 
         $task = new Task();
         $task->fill($data)
@@ -87,17 +89,18 @@ class TaskController extends Controller
         return view('task.edit', compact('task', 'users', 'taskStatuses', 'labels'));
     }
 
-    public function update(Request $request, Task $task): RedirectResponse
+    public function update(TaskRequest $request, Task $task): RedirectResponse
     {
-        $data = $this->validate($request, [
-            'name' => 'required',
-            'description' => 'nullable',
-            'status_id' => 'required|exists:task_statuses,id',
-            'assigned_to_id' => 'nullable|exists:users,id',
-        ]);
+//        $data = $this->validate($request, [
+//            'name' => 'required',
+//            'description' => 'nullable',
+//            'status_id' => 'required|exists:task_statuses,id',
+//            'assigned_to_id' => 'nullable|exists:users,id',
+//        ]);
 
-        $task->fill($data);
-        $task->save();
+        $data = $request->validated();
+
+        $task->fill($data)->save();
 
         $task->labels()->detach();
         if (isset($request->labels[0])) {
