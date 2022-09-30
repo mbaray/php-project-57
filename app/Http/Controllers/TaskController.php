@@ -114,13 +114,9 @@ class TaskController extends Controller
 
     public function destroy(Task $task): RedirectResponse
     {
-        if ($task) {
-            $task->labels()->detach();
-            $task->delete();
-            flash(__('messages.task.delete.success'))->success();
-        } else {
-            flash(__('messages.task.delete.fail'))->error();
-        }
+        $task->labels()->detach();
+        $task->delete();
+        flash(__('messages.task.delete.success'))->success();
 
         return redirect()->route('tasks.index');
     }

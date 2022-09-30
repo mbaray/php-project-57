@@ -143,7 +143,7 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseMissing('tasks', [
             'name' => 'testTask',
-            'created_by_id' => $this->task->creator->id
+            'created_by_id' => $this->task->created_by_id
         ]);
     }
 }
