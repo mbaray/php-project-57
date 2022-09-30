@@ -52,14 +52,7 @@ class TaskController extends Controller
 
     public function store(TaskRequest $request): RedirectResponse
     {
-//        $data = $this->validate($request, [
-//            'name' => 'required',
-//            'description' => 'nullable',
-//            'status_id' => 'required|exists:task_statuses,id',
-//            'assigned_to_id' => 'nullable|exists:users,id',
-//        ]);
         $data = $request->validated();
-
         $task = new Task();
         $task->fill($data)
             ->creator()
@@ -91,15 +84,7 @@ class TaskController extends Controller
 
     public function update(TaskRequest $request, Task $task): RedirectResponse
     {
-//        $data = $this->validate($request, [
-//            'name' => 'required',
-//            'description' => 'nullable',
-//            'status_id' => 'required|exists:task_statuses,id',
-//            'assigned_to_id' => 'nullable|exists:users,id',
-//        ]);
-
         $data = $request->validated();
-
         $task->fill($data)->save();
 
         $task->labels()->detach();
@@ -116,6 +101,7 @@ class TaskController extends Controller
     {
         $task->labels()->detach();
         $task->delete();
+
         flash(__('messages.task.delete.success'))->success();
 
         return redirect()->route('tasks.index');

@@ -10,7 +10,6 @@ class TaskStatusRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-//        return Auth::user();
     }
 
     public function rules(): array

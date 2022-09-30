@@ -19,7 +19,6 @@ class TaskStatusController extends Controller
 
     public function index(): View
     {
-//        $taskStatuses = DB::table('task_statuses')->orderBy('id')->paginate(10);
         $taskStatuses = QueryBuilder::for(TaskStatus::class)
             ->orderBy('id')
             ->paginate(10);
@@ -36,11 +35,7 @@ class TaskStatusController extends Controller
 
     public function store(TaskStatusRequest $request): RedirectResponse
     {
-//        $data = $this->validate($request, [
-//            'name' => 'required|unique:task_statuses',
-//        ]);
         $data = $request->validated();
-
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data)->save();
 
@@ -56,11 +51,7 @@ class TaskStatusController extends Controller
 
     public function update(TaskStatusRequest $request, TaskStatus $taskStatus): RedirectResponse
     {
-//        $data = $this->validate($request, [
-//            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
-//        ]);
         $data = $request->validated();
-
         $taskStatus->fill($data)->save();
 
         flash(__('messages.task_status.update.success'))->success();

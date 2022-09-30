@@ -19,7 +19,6 @@ class LabelController extends Controller
 
     public function index(): View
     {
-//        $labels = DB::table('labels')->orderBy('id')->paginate(10);
         $labels = QueryBuilder::for(Label::class)->orderBy('id')->paginate(10);
 
         return view('label.index', compact('labels'));
@@ -34,12 +33,7 @@ class LabelController extends Controller
 
     public function store(LabelRequest $request): RedirectResponse
     {
-//        $data = $this->validate($request, [
-//            'name' => 'required|unique:labels',
-//            'description' => 'nullable'
-//        ]);
         $data = $request->validated();
-
         $label = new Label();
         $label->fill($data)->save();
 
@@ -55,12 +49,7 @@ class LabelController extends Controller
 
     public function update(LabelRequest $request, Label $label): RedirectResponse
     {
-//        $data = $this->validate($request, [
-//            'name' => 'required|unique:labels,name,' . $label->id,
-//            'description' => 'nullable'
-//        ]);
         $data = $request->validated();
-
         $label->fill($data)->save();
 
         flash(__('messages.label.update.success'))->success();
@@ -76,6 +65,7 @@ class LabelController extends Controller
         } else {
             flash(__('messages.label.delete.fail'))->error();
         }
+
         return redirect()->route('labels.index');
     }
 }
