@@ -7,7 +7,7 @@
 
     <p class='font-semibold text-gray-800'> {{ __('labels.Name') }}: {{ $task->name }} </p>
     <p class='font-semibold text-gray-800'> {{ __('labels.Status') }}: {{ $task->status->name }} </p>
-    <p class='font-semibold text-gray-800'> {{ __('labels.Descriptiomn') }}: {{ $task->description }} </p>
+    <p class='font-semibold text-gray-800'> {{ __('labels.Description') }}: {{ $task->description }} </p>
     <p class='font-semibold text-gray-800'> {{ __('labels.Labels') }}:
         @foreach ($task->labels as $label)
             <span class='badge badge-pill text-bg-success'> {{ $label->name }} </span>
